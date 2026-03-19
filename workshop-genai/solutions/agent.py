@@ -9,7 +9,7 @@ from langchain_core.tools import tool
 
 # tag::model[]
 # Initialize the chat model
-model = init_chat_model("gpt-4o", model_provider="openai")
+model = init_chat_model("gpt-5.2", model_provider="openai")
 # end::model[]
 
 # tag::driver[]
@@ -63,7 +63,8 @@ for step in agent.stream(
 
 """
 Summarise the schema of the graph database.
-What questions can I answer using this graph database?
 How are concepts related to other entities?
 How does the graph model relate technologies to benefits?
+What questions can I answer using this graph database?
+
 """
