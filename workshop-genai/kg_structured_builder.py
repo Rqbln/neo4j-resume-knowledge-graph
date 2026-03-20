@@ -36,13 +36,13 @@ NODE_TYPES = [
     "Example",
     "Process",
     "Challenge",
-    {"label": "Benefit", "description": "A benefit or advantage of using a technology or approach."},
+    "Benefit",
     {
         "label": "Resource",
         "description": "A related learning resource such as a book, article, video, or course.",
         "properties": [
             {"name": "name", "type": "STRING", "required": True}, 
-            {"name": "type", "type": "STRING"}
+            {"name": "link", "type": "STRING"}
         ]
     },
 ]
