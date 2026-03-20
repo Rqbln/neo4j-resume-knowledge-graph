@@ -8,7 +8,7 @@ from langchain.agents import create_agent
 from langchain_core.tools import tool
 
 # Initialize the chat model
-model = init_chat_model("gpt-4o", model_provider="openai")
+model = init_chat_model("gpt-5.2", model_provider="openai")
 
 # Connect to Neo4j database
 driver = GraphDatabase.driver(

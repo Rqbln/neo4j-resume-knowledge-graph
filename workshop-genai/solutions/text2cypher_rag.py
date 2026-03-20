@@ -17,14 +17,13 @@ driver = GraphDatabase.driver(
 )
 
 llm = OpenAILLM(
-    model_name="gpt-4o", 
-    model_params={"temperature": 0}
+    model_name="gpt-5.2"
 )
 
 # tag::examples[]
 # Cypher examples as input/query pairs
 examples = [
-    "USER INPUT: 'Find a node with the name $name?' QUERY: MATCH (node) WHERE toLower(node.name) CONTAINS toLower($name) RETURN node.name AS name, labels(node) AS labels",
+    "USER INPUT: 'Find a node with a nameToSearch' QUERY: MATCH (node) WHERE toLower(node.name) CONTAINS toLower(nameToSearch) RETURN node.name AS name, labels(node) AS labels",
 ]
 # end::examples[]
 
@@ -64,6 +63,6 @@ driver.close()
 query_text = "How many technologies are mentioned in the knowledge graph?"
 query_text = "How does Neo4j relate to other technologies?"
 query_text = "What entities exist in the knowledge graph?" 
-query_text = "Which lessons cover Generative AI concepts?"
+query_text = "What resource urls are referenced?"
 # end::example_queries[]
 """

@@ -72,13 +72,16 @@ retriever = VectorCypherRetriever(
 # end::retriever[]
 
 #  Create the LLM
-llm = OpenAILLM(model_name="gpt-4o")
+llm = OpenAILLM(
+    model_name="gpt-5.2"
+)
 
 # Create GraphRAG pipeline
 rag = GraphRAG(retriever=retriever, llm=llm)
 
 # Search
 query_text = "Where can I learn more about knowledge graphs?"
+query_text = "Describe Retrieval Augmented Generation."
 
 response = rag.search(
     query_text=query_text, 
@@ -97,6 +100,7 @@ driver.close()
 
 """
 # tag::example_queries[]
-query_text = "What technologies and concepts support knowledge graphs?"
+query_text = "Where can I learn more about knowledge graphs?"
+query_text = "Describe Retrieval Augmented Generation."
 # end::example_queries[]
 """
