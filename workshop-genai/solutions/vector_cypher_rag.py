@@ -80,8 +80,7 @@ llm = OpenAILLM(
 rag = GraphRAG(retriever=retriever, llm=llm)
 
 # Search
-query_text = "Where can I learn more about knowledge graphs?"
-query_text = "Describe Retrieval Augmented Generation."
+query_text = "What is a knowledge graphs and where can I learn about them?"
 
 response = rag.search(
     query_text=query_text, 
@@ -100,7 +99,8 @@ driver.close()
 
 """
 # tag::example_queries[]
-query_text = "Where can I learn more about knowledge graphs?"
+query_text = "What is a knowledge graphs and where can I learn about them?"
+query_text = "What technologies and concepts support knowledge graphs?"
 query_text = "Describe Retrieval Augmented Generation."
 # end::example_queries[]
 """
