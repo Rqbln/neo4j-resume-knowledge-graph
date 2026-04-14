@@ -25,7 +25,7 @@ Professional project demonstrating how to build a hybrid knowledge graph (lexica
 ## Main Files
 
 - `workshop-genai/kg_resume_builder.py`: end-to-end resume graph builder
-- `workshop-genai/RESUME_KG_REPORT.md`: full implementation report, methodology, and results
+- `workshop-genai/RESUME_KG_REPORT.md`: final workshop report (methodology, implementation, and outcomes)
 - `workshop-genai/kg_builder.py`: baseline KG pipeline from PDF
 - `workshop-genai/kg_builder_schema.py`: schema-constrained KG extraction
 - `workshop-genai/kg_structured_builder.py`: structured + unstructured lesson graph
@@ -78,7 +78,10 @@ ORDER BY mentions DESC
 LIMIT 20
 ```
 
-## Detailed Report
+## Final Workshop Deliverable
 
-See the full project report: `workshop-genai/RESUME_KG_REPORT.md`
+This repository includes my final workshop report completed at the end of the practical session.
+
+- Full report: [Resume Knowledge Graph Report](workshop-genai/RESUME_KG_REPORT.md)
+- Coverage: project scope, architecture choices, schema design, execution results, queries, and improvement roadmap
 
