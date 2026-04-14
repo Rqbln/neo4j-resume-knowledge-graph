@@ -85,3 +85,6 @@ This repository includes my final workshop report completed at the end of the pr
 - Full report: [Resume Knowledge Graph Report](workshop-genai/RESUME_KG_REPORT.md)
 - Coverage: project scope, architecture choices, schema design, execution results, queries, and improvement roadmap
 
+## Workshop origin
+
+This repo extends exercises from the [Neo4j and Generative AI Workshop](https://graphacademy.neo4j.com/courses/workshop-genai) on [GraphAcademy](https://graphacademy.neo4j.com).
