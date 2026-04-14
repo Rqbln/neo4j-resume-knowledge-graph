@@ -10,19 +10,53 @@ from neo4j_graphrag.generation import GraphRAG
 
 # Connect to Neo4j database
 driver = GraphDatabase.driver(
-    os.getenv("NEO4J_URI"), 
+    os.getenv("NEO4J_URI"),
     auth=(
-        os.getenv("NEO4J_USERNAME"), 
+        os.getenv("NEO4J_USERNAME"),
         os.getenv("NEO4J_PASSWORD")
     )
+)
+
+# Create vector index used by the retriever.
+driver.execute_query(
+    """
+    CREATE VECTOR INDEX chunkEmbedding IF NOT EXISTS
+    FOR (n:Chunk)
+    ON n.embedding
+    OPTIONS {indexConfig: {
+        `vector.dimensions`: 1536,
+        `vector.similarity_function`: 'cosine'
+    }}
+    """,
+    database_=os.getenv("NEO4J_DATABASE"),
 )
 
 # Create embedder
 embedder = OpenAIEmbeddings(model="text-embedding-ada-002")
 
-# Define retrieval query
+# Define retrieval query with both lexical and domain context.
 retrieval_query = """
-RETURN node.text as text, score
+MATCH (node)-[:FROM_DOCUMENT]->(d)
+OPTIONAL MATCH (d)-[:PDF_OF]->(lesson:Lesson)
+RETURN
+    node.text as text,
+    score,
+    lesson.url as lesson_url,
+    collect {
+        MATCH (node)<-[:FROM_CHUNK]-(entity)-[r]->(other)-[:FROM_CHUNK]->()
+        WITH toStringList([
+            head([label IN labels(entity) WHERE NOT label IN ['__Entity__', '__KGBuilder__']]),
+            entity.name,
+            properties(entity)['type'],
+            properties(entity)['description'],
+            type(r),
+            head([label IN labels(other) WHERE NOT label IN ['__Entity__', '__KGBuilder__']]),
+            other.name,
+            properties(other)['type'],
+            properties(other)['description']
+        ]) AS values
+        RETURN reduce(acc = "", item IN values | acc || coalesce(item || ' ', ''))
+    } as associated_entities
 """
 
 # Create retriever
@@ -43,15 +77,19 @@ llm = OpenAILLM(
 rag = GraphRAG(retriever=retriever, llm=llm)
 
 # Search
-query_text = "What is a knowledge graphs and where can I learn about them?"
+query_text = os.getenv(
+    "RAG_QUERY",
+    "What are knowledge graphs and where can I learn about them?"
+)
 
 response = rag.search(
-    query_text=query_text, 
+    query_text=query_text,
     retriever_config={"top_k": 5},
     return_context=True
 )
 
 print(response.answer)
+print("CONTEXT:", response.retriever_result.items)
 
 # Close the database connection
 driver.close()
